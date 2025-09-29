@@ -95,27 +95,41 @@ document.addEventListener('DOMContentLoaded', function() {
     if(username && repo) form.dispatchEvent(new Event('submit'));
   }
 
-  function renderReleases(releases, tag='') {
-    container.innerHTML = '';
+	function renderReleases(releases, tag='') {
+  		releases = releases.filter(r => r.assets && r.assets.length > 0);
+  		if(releases.length === 0) {
+  		  throw new Error(`No releases with files found${tag ? ` for tag "${tag}"` : ''}`);
+  		}
+	
+  		if(tag) releases = releases.filter(r => r.tag_name === tag);
+	
+  		if(releases.length === 0) {
+  		  throw new Error(`No releases with files found${tag ? ` for tag "${tag}"` : ''}`);
+  	}
+
+    if(tag) releases = releases.filter(r => r.tag_name === tag);
+
+    releases = releases.filter(r => r.assets && r.assets.length > 0);
+
     if(releases.length === 0) {
-      container.innerHTML = '<div class="no-releases">No releases found</div>';
-      return;
-    }
-    if(tag) releases = releases.filter(r=>r.tag_name===tag);
-    if(releases.length===0) {
-      container.innerHTML = `<div class="no-releases">Release with tag "${tag}" not found</div>`;
+      container.innerHTML = `<div class="no-releases">No releases with files found${tag ? ` for tag "${tag}"` : ''}</div>`;
       return;
     }
 
-    const totalDownloads = releases.reduce((sum,r)=>sum+r.assets.reduce((aSum,a)=>aSum+a.download_count,0),0);
-    const totalDiv = document.createElement('div');
-    totalDiv.className = 'total-downloads';
-    totalDiv.innerHTML = `<i class="fas fa-download"></i> Total Downloads: <span class="downloads-count">${totalDownloads}</span>`;
-    container.appendChild(totalDiv);
+    const totalDownloads = releases.reduce(
+      (sum, r) => sum + r.assets.reduce((aSum, a) => aSum + a.download_count, 0),
+      0
+    );
 
-    releases.forEach((r,i)=>{
+ 	const totalDiv = document.createElement('div');
+  	totalDiv.className = 'total-downloads';
+  	totalDiv.innerHTML = `<i class="fas fa-download"></i> Total Downloads: <span class="downloads-count">${totalDownloads}</span>`;
+  	container.innerHTML = '';
+  	container.appendChild(totalDiv);
+
+    releases.forEach((r, i) => {
       const card = document.createElement('div');
-      card.className='release-card';
+      card.className = 'release-card';
       card.innerHTML = `
         <div class="release-header">
           <span class="version">${r.tag_name}${i===0 && !tag?'<span class="latest-label"><i class="fas fa-star"></i> Latest</span>':''}</span>
@@ -130,32 +144,33 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="files-title"><i class="fas fa-file"></i> Files Name</span>
             <span class="downloads-title"><i class="fas fa-download"></i> Downloads</span>
           </div>
-          ${r.assets.length>0? r.assets.map(f=>`<div class="file-item"><a href="${f.browser_download_url}" target="_blank">${f.name}</a><span>${f.download_count}</span></div>`).join('') :
-            `<div class="file-item"><span style="color:#ccc;font-style:italic">No files available</span><span>0</span></div>`}
+          ${r.assets.map(f=>`<div class="file-item"><a href="${f.browser_download_url}" target="_blank">${f.name}</a><span>${f.download_count}</span></div>`).join('')}
         </div>
       `;
       container.appendChild(card);
     });
   }
 
-  form.addEventListener('submit', async e=>{
+  form.addEventListener('submit', async e => {
     e.preventDefault();
-    const username=form.username.value.trim();
-    const repo=form.repository.value.trim();
-    const tag=form.releaseTag.value.trim();
+    const username = form.username.value.trim();
+    const repo = form.repository.value.trim();
+    const tag = form.releaseTag.value.trim();
     updateUrlParams(username, repo, tag);
-    container.innerHTML='<div class="loader"><div class="loader-spinner"></div></div>';
-    try{
-      const releases=await fetchAllReleases(username, repo);
+    container.innerHTML = '<div class="loader"><div class="loader-spinner"></div></div>';
+    try {
+      const releases = await fetchAllReleases(username, repo);
       renderReleases(releases, tag);
-    }catch(err){
-      container.innerHTML=`<p style="text-align:center">${err.message}</p>`;
+    } catch(err) {
+      container.innerHTML = `<p style="text-align:center">${err.message}</p>`;
     }
   });
 
   autoFillFromUrl();
 });
 </script>
+
+
 
 </body>
 </html>
