@@ -1,0 +1,269 @@
+.release-card {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.release-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.release-header .version {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.release-header .version::before {
+    content: "\f02b"; 
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 0.9em;
+    color: #a4d7f4;
+    opacity: 0.8;
+    flex-shrink: 0;
+}
+
+.release-header .version-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.release-header > span:last-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: 15px;
+}
+
+.latest-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    background: rgba(164, 215, 244, 0.2);
+    color: #a4d7f4;
+    border-radius: 6px;
+    border: 1px solid rgba(164, 215, 244, 0.3);
+    flex-shrink: 0;
+}
+
+.latest-label i {
+    margin-right: 6px;
+}
+
+.release-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px 20px;
+    font-size: 0.95rem;
+}
+
+.release-meta span {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.release-author {
+    font-weight: 500;
+    color: #ccc;
+}
+
+.release-author .author-name {
+    color: #a4d7f4;
+    margin-left: 6px;
+    font-weight: 600;
+}
+
+.release-date {
+    color: #ccc;
+}
+
+.release-date i,
+.release-author i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+}
+
+.file-list {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.file-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.file-list-header .files-title,
+.file-list-header .downloads-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background-color 0.2s ease;
+    gap: 15px;
+}
+
+.file-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.file-item:last-child {
+    border-bottom: none;
+}
+
+.file-item a {
+    color: #a4d7f4;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.file-item a:hover {
+    text-decoration: underline;
+}
+
+.file-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+.file-item span:last-child {
+    font-weight: 600;
+    color: #fff;
+    min-width: 70px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .release-header {
+        padding: 12px 16px;
+        font-size: 1rem;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .release-header .version {
+        flex: 1 1 60%;
+    }
+    
+    .release-header > span:last-child {
+        margin-left: 0;
+        flex-shrink: 0;
+    }
+    
+    .release-meta {
+        padding: 14px 16px;
+        gap: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .file-list-header,
+    .file-item {
+        padding: 12px 16px;
+    }
+    
+    .file-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .file-item a {
+        width: 100%;
+    }
+    
+    .file-item span:last-child {
+        align-self: flex-end;
+        min-width: auto;
+        text-align: left;
+    }
+    
+    .file-list-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .file-list-header .downloads-title {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .release-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .release-header .version {
+        width: 100%;
+    }
+    
+    .release-header > span:last-child {
+        align-self: flex-end;
+    }
+    
+    .file-item {
+        padding: 10px 16px;
+    }
+    
+    .file-name {
+        font-size: 0.9rem;
+    }
+    
+    .latest-label {
+        font-size: 0.75rem;
+        padding: 3px 6px;
+    }
+}
+
+.file-item a {
+    position: relative;
+    padding-right: 10px;
+}
+
