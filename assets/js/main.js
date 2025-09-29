@@ -45,7 +45,7 @@ async function fetchAllReleases(username, repo) {
 function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     return {
-        username: params.get('name'),
+        username: params.get('username'),
         repo: params.get('repo'),
         tag: params.get('tag')
     };
