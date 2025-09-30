@@ -1,2 +1,43 @@
-# Pulse
-Download Stats for GitHub
+<div align="center">
+  
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Audiowide&size=60&duration=1000&pause=5000&center=true&vCenter=true&width=250&height=70&lines=Pulse" alt="Typing SVG" /></a> 
+
+<img src="https://github.com/Greedeks/Pulse/blob/main/.github/preview.png"/><br/>
+
+</div>
+
+<div align="center">
+  
+##  Web app for visualizing and exploring **GitHub release download statistics**.  
+</div>
+
+## Features
+
+- **Download statistics**
+  - Shows the **total downloads** across all releases.  
+  - Displays the **total downloads for a specific release**.  
+
+- **Release details**
+  - Shows the **release date**.  
+  - Lists the **author** – click to open their GitHub profile.  
+  - Lists the **tag** – click to open the corresponding release.  
+
+- **Assets**
+  - Only displays releases that contain assets.  
+  - Shows all assets for each release.  
+  - Each asset is downloadable with a single click.  
+
+- **Sharable links**
+  - Generate links with pre-filled parameters for easy sharing:  
+    - View all releases:  
+      ```text
+      https://greedeks.github.io/Pulse/?username={username}&repo={repository}
+      ```
+    - View a specific release by tag:  
+      ```text
+      https://greedeks.github.io/Pulse/?username={username}&repo={repository}&tag={tag}
+      ```
+<br/>
+
+## Screenshot
+<img src="https://github.com/Greedeks/Pulse/blob/main/.github/card.png"/><br/>
