@@ -1,6 +1,6 @@
 <div align="center">
   
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Audiowide&size=60&duration=1000&pause=5000&center=true&vCenter=true&width=250&height=70&lines=Pulse" alt="Typing SVG" /></a> 
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Audiowide&size=60&duration=1000&pause=5000&center=true&vCenter=true&width=250&height=90&lines=Pulse" alt="Typing SVG" /></a> 
 
 <img src="https://github.com/Greedeks/Pulse/blob/main/.github/preview.png"/><br/>
 
