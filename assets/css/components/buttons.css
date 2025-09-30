@@ -4,9 +4,9 @@
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #ffffffcc;
-    padding: 0.7rem 3rem; 
+    padding: 0.7rem 5rem;
     border-radius: 30px;
-    font-size: 0.9rem; 
+    font-size: clamp(0.9rem, 2.4vw, 1.1rem); 
     font-weight: 500;
     transition: all 0.3s ease;
     -webkit-transform: translateZ(0);
