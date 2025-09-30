@@ -184,6 +184,7 @@ main.main {
 .total-downloads .downloads-count {
     color: #a4d7f4;
     font-weight: 700;
+    filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));
 }
 
 input:-webkit-autofill {

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
   <link rel="stylesheet" href="assets/css/components/buttons.css">
@@ -121,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     releases.forEach((r, i) => {
         const card = document.createElement('div');
         card.className = 'release-card';
+
         card.innerHTML = `
             <div class="release-header">
                 <a href="https://github.com/${r.author.login}/${form.repository.value.trim()}/releases/tag/${r.tag_name}" 
@@ -140,11 +141,28 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="file-list">
                 <div class="file-list-header">
-                    <span class="files-title"><i class="fas fa-file"></i> Files Name</span>
-                    <span class="downloads-title"><i class="fas fa-download"></i> Downloads</span>
+                    <span class="files-title"><i class="fas fa-cube"></i> Assets</span>
+                    <span class="downloads-title"><i class="fas fa-circle-down"></i> Downloads</span>
                 </div>
                 ${r.assets.map(f=>`<div class="file-item"><a href="${f.browser_download_url}" target="_blank">${f.name}</a><span>${f.download_count}</span></div>`).join('')}
             </div>
+            ${r.reactions ? `
+            <div class="reactions-section">
+                <div class="file-list-header">
+                    <span class="files-title"><i class="fas fa-bell"></i> Reactions</span>
+                    <span class="downloads-title"><i class="fas fa-poll"></i> ${r.reactions.total_count}</span>
+                </div>
+                <div class="reactions-items" style="display:flex; flex-wrap:wrap; gap:12px; padding:12px 20px;">
+                    ${r.reactions['+1'] ? `<span><i class="fas fa-thumbs-up" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions['+1']}</span>` : ''}
+                    ${r.reactions['-1'] ? `<span><i class="fas fa-thumbs-down" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions['-1']}</span>` : ''}
+                    ${r.reactions.laugh ? `<span><i class="fas fa-smile" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions.laugh}</span>` : ''}
+                    ${r.reactions.hooray ? `<span><i class="fas fa-hands-clapping" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions.hooray}</span>` : ''}
+                    ${r.reactions.confused ? `<span><i class="fas fa-surprise" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions.confused}</span>` : ''}
+                    ${r.reactions.heart ? `<span><i class="fas fa-heart" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions.heart}</span>` : ''}
+                    ${r.reactions.rocket ? `<span><i class="fas fa-rocket" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions.rocket}</span>` : ''}
+                    ${r.reactions.eyes ? `<span><i class="fas fa-eye" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions.eyes}</span>` : ''}
+                </div>
+            </div>` : ''}
         `;
         container.appendChild(card);
     });

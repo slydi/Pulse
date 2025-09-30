@@ -8,7 +8,7 @@
 
 <div align="center">
   
-##  Web app for visualizing and exploring **GitHub release download statistics**.  
+## Responsive web app for GitHub release download statistics
 </div>
 
 ## Features
@@ -25,7 +25,13 @@
 - **Assets**
   - Only displays releases that contain assets.  
   - Shows all assets for each release.  
-  - Each asset is downloadable with a single click.  
+  - Each asset is downloadable with a single click.
+
+- **Reactions**
+  - Displays GitHub reactions (+1, -1, laugh, hooray, confused, heart, rocket, eyes) for each release.  
+  - Shows total reaction count in the header.  
+  - Reactions section only appears if the release has any reactions.
+    Reactions
 
 - **Sharable links**
   - Generate links with pre-filled parameters for easy sharing:  
