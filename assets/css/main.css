@@ -1,9 +1,11 @@
 /* General */
+html {
+    scroll-behavior: smooth;
+}
 html, body { 
     height: 100%;
     margin: 0;
     padding: 0;
-    scroll-behavior: smooth;
 }
 
 body {
@@ -21,7 +23,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background:  rgb(27, 27, 30);
+    background: rgb(27, 27, 30);
     background-size: cover;
     z-index: -1;
 }
@@ -66,6 +68,31 @@ main.main {
     padding: 1.6rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     text-align: center;
+    position: relative; 
+    overflow: hidden; 
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-window::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(164, 215, 244, 0.15), transparent);
+    opacity: 0;
+}
+
+.glass-window.shimmer-once::before {
+    animation: shimmer-once 1s ease forwards;
+    opacity: 1;
+}
+
+@keyframes shimmer-once {
+    0% { left: -100%; opacity: 1; }
+    80% { left: 100%; opacity: 1; }
+    100% { left: 100%; opacity: 0; }
 }
 
 .glass-window h2 {
@@ -107,6 +134,7 @@ main.main {
     gap: 2rem;
     width: 100%;
 }
+
 .main p {
     font-size: clamp(0.72rem, 1.6vw, 1rem);
     line-height: 1.6;
@@ -114,6 +142,7 @@ main.main {
     opacity: 0.9;
 }
 
+/* Loader */
 .loader {
   display: flex;
   justify-content: center;
@@ -136,7 +165,7 @@ main.main {
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(164, 215, 244, 0.1), transparent);
-  animation: shimmer 2s infinite;
+  animation: shimmer-once 2s infinite;
 }
 
 .loader-spinner {
@@ -153,7 +182,7 @@ main.main {
   z-index: 1;
 }
 
-@keyframes shimmer {
+@keyframes shimmer-once {
   0% { left: -100%; }
   100% { left: 100%; }
 }
@@ -161,30 +190,6 @@ main.main {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-.total-downloads {
-    text-align: center;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    margin-top: 20px;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    width: 100%;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.total-downloads .downloads-count {
-    color: #a4d7f4;
-    font-weight: 700;
-    filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));
 }
 
 input:-webkit-autofill {
@@ -201,6 +206,5 @@ input:-webkit-autofill {
     .main h3 { white-space: normal; font-size: 1rem; height: auto; }
 }
 
-@media (max-width: 480px) {
-    .glass-window { padding: 1.2rem; }
-}
+@media (max-width: 480px) { .glass-window { padding: 1.2rem; } }
+

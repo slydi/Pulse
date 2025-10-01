@@ -23,3 +23,58 @@
     color: #a4d7f4;
     text-shadow: 0px 2px 20px #ACE5EE;
 }
+
+/* Button scroll */
+
+.btn-scroll-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #a4d7f4;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 1000;
+}
+
+.btn-scroll-top i {
+  filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));
+}
+
+.btn-scroll-top.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.btn-scroll-top:hover {
+  background: rgba(164, 215, 244, 0.15);
+  border-color: rgba(164, 215, 244, 0.4);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 480px) {
+  .btn-scroll-top {
+    width: 56px;
+    height: 56px;
+    font-size: 1.4rem;
+    bottom: 16px;
+    right: 16px;
+  }
+}

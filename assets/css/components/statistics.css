@@ -1,0 +1,111 @@
+.statistics-section {
+    width: 100%;
+    margin: 1.5rem auto 0;
+    max-width: 600px;
+}
+
+.stat-card {
+    width: 100%;
+    background: rgba(0,0,0,0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.stat-card:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(164, 215, 244, 0.4);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(164, 215, 244, 0.1), transparent);
+    transition: left 0.7s ease;
+}
+
+.stat-card:hover::before {
+    left: 100%;
+}
+
+.stat-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    z-index: 2;
+}
+
+.stat-item {
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-item:first-child {
+    border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.stat-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #a4d7f4;
+    filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.4));
+}
+
+.stat-main-value {
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+    font-weight: 700;
+    color: #a4d7f4;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 12px rgba(164, 215, 244, 0.4));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffffffcc;
+    margin-bottom: 0.25rem;
+}
+
+.stat-description {
+    font-size: 0.8rem;
+    color: #ffffff99;
+    line-height: 1.3;
+}
+
+/* Adaptive */
+@media (max-width: 768px) {
+    .statistics-section {
+        max-width: 500px;
+        margin: 1rem auto 0;
+    }
+    .stat-main-value { font-size: clamp(1.2rem, 4.5vw, 2rem); }
+    .stat-item { padding: 16px; }
+}
+
+@media (max-width: 480px) {
+    .statistics-section {
+        max-width: 400px;
+        margin: 0.8rem auto 0;
+    }
+    .stat-main-value { font-size: clamp(1rem, 6vw, 1.6rem); }
+    .stat-item { padding: 12px; }
+    .stat-icon { font-size: 1.6rem; }
+    .stat-label { font-size: 0.8rem; }
+    .stat-description { font-size: 0.7rem; }
+}
