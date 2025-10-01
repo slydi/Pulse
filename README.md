@@ -13,9 +13,14 @@
 
 ## Features
 
+- **Responsive design**
+  - Adapts seamlessly to various devices, including smartphones and tablets.
+
 - **Download statistics**
   - Shows the **total downloads** across all releases.  
   - Displays the **total downloads for a specific release**.  
+  - Outputs the **total reactions** across all releases.  
+  - Shows the **total number of assets** across all releases.    
 
 - **Release details**
   - Shows the **release date**.  
