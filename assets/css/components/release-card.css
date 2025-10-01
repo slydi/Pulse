@@ -61,32 +61,58 @@
   font-size: 1rem;
 }
 
-/* Latest label */
-.latest-label {
+/* Label */
+.release-label, .pre-label, .latest-label {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-   padding: 3px 8px;
-  margin-left: 10px;
+  padding: 3px 8px;
   font-size: 0.85rem;
   font-weight: 600;
-  background: rgba(164,215,244,0.15);
-  color: #a4d7f4;
   border-radius: 12px;
-  border: 1px solid rgba(164,215,244,0.3);
   white-space: nowrap;
+  border: 1px solid transparent;
 }
 
-.latest-label i { font-size: 0.9rem; }
+.release-label {
+  background: rgba(100, 255, 100, 0.1);
+  color: #64ff64;
+  border-color: rgba(100, 255, 100, 0.3);
+}
+
+.pre-label {
+  background: rgba(255, 200, 100, 0.1);
+  color: #ffc864;
+  border-color: rgba(255, 200, 100, 0.3);
+}
+
+.latest-label {
+  background: rgba(164,215,244,0.15);
+  color: #a4d7f4;
+  border: 1px solid rgba(164,215,244,0.3);
+}
+
+.latest-label i,
+.release-label i,
+.pre-label i {
+  font-size: 0.9rem;
+}
 
 /* Meta */
 .release-meta {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: flex-end;
   padding: 14px 20px;
   font-size: 0.95rem;
+  gap: 10px;
+}
+
+.release-meta-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
 }
 
 .author-link {
@@ -95,6 +121,16 @@
   display: inline-flex;
   align-items: center;
   font-size: inherit;
+}
+
+.author-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-right: 3px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.3);
+  flex-shrink: 0; 
 }
 
 .author-link:hover { color: #a4d7f4; }
@@ -130,6 +166,16 @@
   font-size: 0.95rem;
 }
 
+.release-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: inherit;
+  color: #ccc;
+}
+
+.release-size i { font-size: 0.95rem; }
+
 /* Files */
 .file-list { border-top: 1px solid rgba(255,255,255,0.15); }
 
@@ -145,7 +191,7 @@
 }
 
 .file-list-header .files-title,
-.file-list-header .downloads-title {
+.file-list-header .files-title-downloads {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -230,6 +276,10 @@
   .release-author .author-name { max-width: 110px; }
   .file-item a { max-width: 70%; }
   .latest-label { font-size: 0.8rem; padding: 2px 6px; }
-  .release-meta { font-size: 0.9rem; padding: 12px 16px; gap: 8px; }
   .file-list-header, .file-item { font-size: 0.9rem; padding: 10px 16px; }
+  .release-meta { font-size: 0.9rem; flex-direction: column; align-items: flex-start; gap: 4px; padding: 12px 16px; }
+  .release-meta-left { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+  .release-size { order: 2; display: flex; align-items: center; gap: 4px; font-size: 0.9rem; }
+  .release-date { order: 1; display: flex; align-items: center; gap: 4px; }
+  .author-avatar { width: 22px; height: 22px; margin-right: 2px; }
 }

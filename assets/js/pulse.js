@@ -70,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function renderStatistics(stats, releases) {
      const statsSection = document.createElement('div');
      statsSection.className = 'statistics-section';
-     
      statsSection.innerHTML = `
          <div class="stat-card">
              <div class="stat-content">
@@ -97,6 +96,14 @@ document.addEventListener('DOMContentLoaded', function() {
      `;
      
      container.appendChild(statsSection);
+  }
+
+  function formatSize(bytes) {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
   function renderReleases(releases, tag = '') {
@@ -126,22 +133,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 <a href="https://github.com/${r.author.login}/${form.repository.value.trim()}/releases/tag/${r.tag_name}" 
                    target="_blank" 
                    class="version-link">
-                    <span class="version">${r.tag_name}${i===0 && !tag?'<span class="latest-label"><i class="fas fa-star"></i> Latest</span>':''}</span>
+                    <span class="version">${r.tag_name}</span>
                 </a>
-                <span class="download-count"><i class="fas fa-download"></i>${r.assets.reduce((acc,a)=>acc+a.download_count,0)}</span>
+            <div class="header-right">
+              ${i===0 && !tag ? '<span class="latest-label"><i class="fas fa-star"></i> Latest</span>' 
+                : r.prerelease 
+                  ? '<span class="pre-label"><i class="fas fa-flask"></i> Pre-release</span>'
+                  : '<span class="release-label"><i class="fas fa-check-circle"></i> Release</span>'}
+            </div>
             </div>
             <div class="release-meta">
-                <a href="https://github.com/${r.author.login}" 
-                   target="_blank" 
-                   class="author-link">
-                    <span class="release-author"><i class="fas fa-user"></i> Author: <span class="author-name">${r.author.login}</span></span>
-                </a>
-                <span class="release-date"><i class="fas fa-calendar-alt"></i> Date: ${new Date(r.published_at).toLocaleDateString()}</span>
+            <div class="release-meta-left">
+              <a href="https://github.com/${r.author.login}" target="_blank" class="author-link">
+                <span class="release-author">
+                  <img src="${r.author.avatar_url}" alt="${r.author.login}" class="author-avatar">
+                  <span class="author-name">${r.author.login}</span>
+                  </span>
+              </a>
+                <span class="release-date">
+                  <i class="fas fa-calendar-alt"></i> Date: ${new Date(r.published_at).toLocaleDateString()}
+                </span>
+              </div>
+              <span class="release-size">
+                <i class="fas fa-database"></i> Size: ${formatSize(r.assets.reduce((acc, a) => acc + a.size, 0))}
+              </span>
             </div>
             <div class="file-list">
                 <div class="file-list-header">
                     <span class="files-title"><i class="fas fa-cube"></i> Assets</span>
-                    <span class="downloads-title"><i class="fas fa-circle-down"></i> Downloads</span>
+                    <span class="files-title-downloads"><i class="fas fa-download"></i> ${r.assets.reduce((acc,a)=>acc+a.download_count,0)}</span>
                 </div>
                 ${r.assets.map(f=>`<div class="file-item"><a href="${f.browser_download_url}" target="_blank">${f.name}</a><span>${f.download_count}</span></div>`).join('')}
             </div>
@@ -149,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="reactions-section">
                 <div class="file-list-header">
                     <span class="files-title"><i class="fas fa-bell"></i> Reactions</span>
-                    <span class="downloads-title"><i class="fas fa-poll"></i> ${r.reactions.total_count}</span>
+                    <span class="files-title-downloads"><i class="fas fa-heart"></i> ${r.reactions.total_count}</span>
                 </div>
                 <div class="reactions-items">
                     ${r.reactions['+1'] ? `<span><i class="fas fa-thumbs-up" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions['+1']}</span>` : ''}
