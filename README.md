@@ -23,8 +23,9 @@
   - Shows the **total number of assets** across all releases.    
 
 - **Release details**
-  - Shows the **release date**.  
-  - Lists the **author** – click to open their GitHub profile.  
+  - Shows the author avatar and author name - click to open their GitHub profile.
+  - Shows the **release date**.
+  - Shows the size of the release assets next to the date.
   - Lists the **tag** – click to open the corresponding release.  
 
 - **Assets**
