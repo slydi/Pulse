@@ -48,13 +48,13 @@ document.addEventListener('DOMContentLoaded', function() {
     let totalReactions = 0;
     let totalReleases = releases.length;
     let totalAssets = 0;
-    
+
     releases.forEach(release => {
       const releaseDownloadsCount = release.assets.reduce((sum, asset) => {
         totalAssets++;
         return sum + asset.download_count;
       }, 0);
-      
+
       totalDownloads += releaseDownloadsCount;
       totalReactions += release.reactions ? release.reactions.total_count : 0;
     });
@@ -106,28 +106,31 @@ document.addEventListener('DOMContentLoaded', function() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
-  function renderReleases(releases, tag = '') {
-    releases = releases.filter(r => r.assets && r.assets.length > 0);
+  function renderReleases(allReleases, tag = '') {
+    let releases = allReleases.filter(r => r.assets && r.assets.length > 0);
     if (releases.length === 0) {
         throw new Error(`No releases with files found${tag ? ` for tag "${tag}"` : ''}`);
     }
 
-    if (tag) {
-        releases = releases.filter(r => r.tag_name === tag);
-        if (releases.length === 0) {
-            throw new Error(`No releases with files found${tag ? ` for tag "${tag}"` : ''}`);
+    const sortedByDate = [...releases].sort((a,b) => new Date(b.published_at) - new Date(a.published_at));
+    const latestRelease = sortedByDate[0];
+
+    if(tag && tag.toLowerCase() === 'latest') { releases = [latestRelease]; } 
+    else if(tag) { 
+        releases = releases.filter(r => r.tag_name.toLowerCase() === tag.toLowerCase());
+        if(releases.length === 0) {
+          throw new Error(`No releases with files found for tag "${tag}"`);
         }
     }
 
-    const stats = calculateStatistics(releases);
-    
+    const stats = calculateStatistics(allReleases); 
     container.innerHTML = '';
-    renderStatistics(stats, releases);
-    
+    renderStatistics(stats, allReleases);
+
     releases.forEach((r, i) => {
+        const isLatest = r.tag_name.toLowerCase() === latestRelease.tag_name.toLowerCase();
         const card = document.createElement('div');
         card.className = 'release-card';
-
         card.innerHTML = `
             <div class="release-header">
                 <a href="https://github.com/${r.author.login}/${form.repository.value.trim()}/releases/tag/${r.tag_name}" 
@@ -136,27 +139,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="version">${r.tag_name}</span>
                 </a>
             <div class="header-right">
-              ${i===0 && !tag ? '<span class="latest-label"><i class="fas fa-star"></i> Latest</span>' 
-                : r.prerelease 
-                  ? '<span class="pre-label"><i class="fas fa-flask"></i> Pre-release</span>'
-                  : '<span class="release-label"><i class="fas fa-check-circle"></i> Release</span>'}
+              ${isLatest ? '<span class="latest-label"><i class="fas fa-star"></i> Latest</span>' : 
+                r.prerelease  ? '<span class="pre-label"><i class="fas fa-flask"></i> Pre-release</span>' : 
+                '<span class="release-label"><i class="fas fa-check-circle"></i> Release</span>'}
             </div>
             </div>
             <div class="release-meta">
-            <div class="release-meta-left">
-              <a href="https://github.com/${r.author.login}" target="_blank" class="author-link">
-                <span class="release-author">
-                  <img src="${r.author.avatar_url}" alt="${r.author.login}" class="author-avatar">
-                  <span class="author-name">${r.author.login}</span>
+              <div class="release-meta-left">
+                <a href="https://github.com/${r.author.login}" target="_blank" class="author-link">
+                  <span class="release-author">
+                    <img src="${r.author.avatar_url}" alt="${r.author.login}" class="author-avatar">
+                    <span class="author-name">${r.author.login}</span>
                   </span>
-              </a>
-                <span class="release-date">
-                  <i class="fas fa-calendar-alt"></i> Date: ${new Date(r.published_at).toLocaleDateString()}
+                </a>
+                <span class="release-published">
+                  <i class="fas fa-calendar-alt"></i> Published: ${new Date(r.published_at).toLocaleDateString()}
                 </span>
               </div>
-              <span class="release-size">
-                <i class="fas fa-database"></i> Size: ${formatSize(r.assets.reduce((acc, a) => acc + a.size, 0))}
-              </span>
+                          
+              <div class="release-meta-right">
+                <div class="release-size">
+                  <i class="fas fa-database"></i> Size: ${formatSize(r.assets.reduce((acc, a) => acc + a.size, 0))}
+                </div>
+                <div class="release-updated">
+                  <i class="fas fa-sync-alt"></i> Updated: ${new Date(r.updated_at || r.published_at).toLocaleDateString()}
+                </div>
+              </div>
             </div>
             <div class="file-list">
                 <div class="file-list-header">
@@ -205,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
       container.innerHTML = `<p style="text-align:center; color: #a4d7f4;">${err.message}</p>`;
     }
   }); 
-    autoFillFromUrl();
+  autoFillFromUrl();
 
   const scrollBtn = document.getElementById('scrollTopBtn');
   window.addEventListener('scroll', () => {
