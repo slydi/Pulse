@@ -49,6 +49,8 @@
       ```text
       https://greedeks.github.io/Pulse/?username={username}&repo={repository}&tag={tag}
       ```
+      > You can also use `tag=latest` to always show the latest release.
+
 <br/>
 
 ## Screenshot
