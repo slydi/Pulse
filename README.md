@@ -11,12 +11,12 @@
 ## Responsive web app for GitHub release download statistics
 </div>
 
-## Features
+## ✨ Features
 
-### **Responsive design**
+### Responsive design
   - Adapts seamlessly to various devices, including smartphones and tablets.
 
-### **Download Statistics**
+### 📊 Download Statistics
   - Shows the **total downloads** across all releases.  
   - Displays the **total downloads for a specific release**.  
   - Outputs the **total reactions** across all releases.  
@@ -24,12 +24,7 @@
 
 <img src="https://github.com/Greedeks/Pulse/blob/main/.github/total.png"/><br/>
 
-### **Release Cards**
-**Comprehensive release information in unified cards:**
-<img src="https://github.com/Greedeks/Pulse/blob/main/.github/card.png"/><br/>
-
-**Each release card includes:**
-
+### 🧩 Release Cards
  **Release Metadata**
 - Author avatar and author name – click to open their GitHub profile.  
 - Tag – click to open the corresponding release.  
@@ -42,12 +37,15 @@
 - Each asset is downloadable with a single click.  
 
 **Reactions**
-- Displays GitHub reactions: `+1`, `-1`, `laugh`, `hooray`, `confused`, `heart`, `rocket`, `eyes`.  
+- Displays GitHub reactions: (👍 👎 🎉 ❤️ 🚀 👀).  
 - Total reaction count is shown in the header.  
 - Reactions section only appears if the release has any reactions.
 
+<img src="https://github.com/Greedeks/Pulse/blob/main/.github/card.png"/><br/>
 
-**Sharable links**
+<br/>
+
+### 🔗 Sharable links
 - Generate links with pre-filled parameters for easy sharing:  
   - View all releases:  
     ```text
@@ -59,7 +57,11 @@
     ```
     > You can also use `tag=latest` to always show the latest release.  
 
-- Instead of filling fields manually, you can also **paste GitHub links**, and they will be automatically parsed into `username`, `repository`, and `tag`.
+<br/>
+
+### 📋 Smart parsing
+
+- Instead of filling fields manually, you can also **paste GitHub links**, and they will be automatically parsed into `username`, `repository`, `tag`.
   
   **Examples of supported formats:**  
   - `username/repo`  
