@@ -8,44 +8,67 @@
 
 <div align="center">
   
-## Responsive web app for GitHub release download statistics
+<h3>Responsive web app for GitHub release download statistics</h3>
+Works seamlessly on desktop, tablet, and mobile.
 </div>
 
-## ✨ Features
+## Features
 
-### Responsive design
-  - Adapts seamlessly to various devices, including smartphones and tablets.
+### Download Statistics 📊
 
-### 📊 Download Statistics
-  - Shows the **total downloads** across all releases.  
-  - Displays the **total downloads for a specific release**.  
-  - Outputs the **total reactions** across all releases.  
-  - Shows the **total number of assets** across all releases.
+<table>
+  <tr>
+    <td>
 
-<img src="https://github.com/Greedeks/Pulse/blob/main/.github/total.png"/><br/>
+**Metrics**
+- **Total Downloads** – total number of downloads across all releases  
+- **Total Reactions** – total number of reactions across all releases  
+- **Assets** – total number of assets across all releases  
+- **Releases** – total number of releases  
+- **Releases with reactions** – number of releases that received at least one reaction
 
-### 🧩 Release Cards
- **Release Metadata**
-- Author avatar and author name – click to open their GitHub profile.  
-- Tag – click to open the corresponding release.  
-- Label – shows whether it is *Release*, *Latest release* or *Pre-release*.  
-- Published date, updated date, release size 
-  
+
+
+    </td>
+    <td>
+      <img src="https://github.com/Greedeks/Pulse/blob/main/.github/total.png" alt="Download statistics"/>
+    </td>
+  </tr>
+</table>
+
+
+### Release Cards 🗂️
+
+<table>
+  <tr>
+    <td>
+
+**Release Metadata**
+- Author avatar and author name – links to GitHub profile  
+- Tag – links to the corresponding release  
+- Label – *Release*, *Latest release* or *Pre-release*  
+- Published date, updated date, release size  
+
 **Assets**
-- Only releases containing assets are displayed.  
-- All assets for each release are listed.  
-- Each asset is downloadable with a single click.  
+- Only releases containing assets are displayed  
+- All assets for each release are listed  
+- Each asset is downloadable with a single click  
 
 **Reactions**
-- Displays GitHub reactions: (👍 👎 🎉 ❤️ 🚀 👀).  
-- Total reaction count is shown in the header.  
-- Reactions section only appears if the release has any reactions.
+- Displays GitHub reactions: 👍 👎 🎉 ❤️ 🚀 👀  
+- Total reaction count shown in the header  
+- Reactions section appears only if present  
 
-<img src="https://github.com/Greedeks/Pulse/blob/main/.github/card.png"/><br/>
+    </td>
+    <td>
+      <img src="https://github.com/Greedeks/Pulse/blob/main/.github/card.png" alt="Release cards"/>
+    </td>
+  </tr>
+</table>
 
 <br/>
 
-### 🔗 Sharable links
+### Sharable links 🔗
 - Generate links with pre-filled parameters for easy sharing:  
   - View all releases:  
     ```text
@@ -59,7 +82,7 @@
 
 <br/>
 
-### 📋 Smart parsing
+### Smart parsing
 
 - Instead of filling fields manually, you can also **paste GitHub links**, and they will be automatically parsed into `username`, `repository`, `tag`.
   
