@@ -13,45 +13,60 @@
 
 ## Features
 
-- **Responsive design**
+### **Responsive design**
   - Adapts seamlessly to various devices, including smartphones and tablets.
 
-- **Download statistics**
+### **Download Statistics**
   - Shows the **total downloads** across all releases.  
   - Displays the **total downloads for a specific release**.  
   - Outputs the **total reactions** across all releases.  
-  - Shows the **total number of assets** across all releases.    
+  - Shows the **total number of assets** across all releases.
 
-- **Release details**
-  - Shows the author avatar and author name - click to open their GitHub profile.
-  - Shows the **release date**.
-  - Shows the size of the release assets next to the date.
-  - Lists the **tag** – click to open the corresponding release.  
+<img src="https://github.com/Greedeks/Pulse/blob/main/.github/total.png"/><br/>
 
-- **Assets**
-  - Only displays releases that contain assets.  
-  - Shows all assets for each release.  
-  - Each asset is downloadable with a single click.
-
-- **Reactions**
-  - Displays GitHub reactions (+1, -1, laugh, hooray, confused, heart, rocket, eyes) for each release.  
-  - Shows total reaction count in the header.  
-  - Reactions section only appears if the release has any reactions.
-    Reactions
-
-- **Sharable links**
-  - Generate links with pre-filled parameters for easy sharing:  
-    - View all releases:  
-      ```text
-      https://greedeks.github.io/Pulse/?username={username}&repo={repository}
-      ```
-    - View a specific release by tag:  
-      ```text
-      https://greedeks.github.io/Pulse/?username={username}&repo={repository}&tag={tag}
-      ```
-      > You can also use `tag=latest` to always show the latest release.
-
-<br/>
-
-## Screenshot
+### **Release Cards**
+**Comprehensive release information in unified cards:**
 <img src="https://github.com/Greedeks/Pulse/blob/main/.github/card.png"/><br/>
+
+**Each release card includes:**
+
+ **Release Metadata**
+- Author avatar and author name – click to open their GitHub profile.  
+- Tag – click to open the corresponding release.  
+- Label – shows whether it is *Release*, *Latest release* or *Pre-release*.  
+- Published date, updated date, release size 
+  
+**Assets**
+- Only releases containing assets are displayed.  
+- All assets for each release are listed.  
+- Each asset is downloadable with a single click.  
+
+**Reactions**
+- Displays GitHub reactions: `+1`, `-1`, `laugh`, `hooray`, `confused`, `heart`, `rocket`, `eyes`.  
+- Total reaction count is shown in the header.  
+- Reactions section only appears if the release has any reactions.
+
+
+**Sharable links**
+- Generate links with pre-filled parameters for easy sharing:  
+  - View all releases:  
+    ```text
+    https://greedeks.github.io/Pulse/?username={username}&repo={repository}
+    ```
+  - View a specific release by tag:  
+    ```text
+    https://greedeks.github.io/Pulse/?username={username}&repo={repository}&tag={tag}
+    ```
+    > You can also use `tag=latest` to always show the latest release.  
+
+- Instead of filling fields manually, you can also **paste GitHub links**, and they will be automatically parsed into `username`, `repository`, and `tag`.
+  
+  **Examples of supported formats:**  
+  - `username/repo`  
+  - `github.com/username/repo`  
+  - `https://github.com/username/repo`  
+  - `username/repo@v1.2.0`  
+  - `username/repo/releases/tag/1.2.1`  
+  - `https://github.com/username/repo/releases/tag/v1.2.3`  
+  - `https://zh.github.com/username/repo`  
+  - `https://zh.github.com/username/repo/releases/tag/v2.0.0`  
