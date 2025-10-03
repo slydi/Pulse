@@ -70,10 +70,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   [form.username, form.repository, form.releaseTag].forEach(input => {
-    input.addEventListener('input', () => { handleInput(input.value, false); });
-    input.addEventListener('paste', (e) => { e.preventDefault();
+    input.addEventListener('input', () => {  handleInput(input.value, false); });
+    input.addEventListener('paste', (e) => {  e.preventDefault();
       const pasteText = (e.clipboardData || window.clipboardData).getData('text');
-      handleInput(pasteText, true);
+      handleInput(pasteText, false);
+      if (!form.username.value && !form.repository.value && !form.releaseTag.value) { input.value = pasteText; }
     });
   });
 
