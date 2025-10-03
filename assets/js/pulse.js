@@ -1,9 +1,12 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('pulseForm');
   const container = document.querySelector('.content');
+  const scrollBtn = document.querySelector('.btn-scroll-top');
+  const footer = document.querySelector('.footer');
+  const baseBottom = parseInt(window.getComputedStyle(scrollBtn).bottom, 10);
 
-  function getUrlParams() {
-    const params = new URLSearchParams(window.location.search);
+  // URL handling
+  function getUrlParams() {const params = new URLSearchParams(window.location.search);
     return {
       username: params.get('username'),
       repo: params.get('repo'),
@@ -11,38 +14,86 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   }
 
-  function updateUrlParams(username, repo, tag='') {
+  function updateUrlParams(username, repo, tag = '') {
     const params = new URLSearchParams();
-    if(username) params.set('username', username);
-    if(repo) params.set('repo', repo);
-    if(tag) params.set('tag', tag);
+    if (username) params.set('username', username);
+    if (repo) params.set('repo', repo);
+    if (tag) params.set('tag', tag);
     const newUrl = window.location.origin + window.location.pathname + '?' + params.toString();
     window.history.pushState({}, '', newUrl);
   }
 
+  function autoFillFromUrl() {
+    const { username, repo, tag } = getUrlParams();
+    if (username) form.username.value = username;
+    if (repo) form.repository.value = repo;
+    if (tag) form.releaseTag.value = tag;
+    if (username && repo) form.dispatchEvent(new Event('submit'));
+  }
+
+  // Handling link pasting
+  function handleInput(value, clear = false) {
+    if (!value) return;
+
+    value = value.trim();
+    value = value.replace(/^(https?:\/\/)?(zh\.)?github\.com\//i, '');
+    let tag = '';
+
+    if (clear) {
+      form.username.value = '';
+      form.repository.value = '';
+      form.releaseTag.value = '';
+    }
+
+    const tagMatch = value.match(/^([\w-]+)\/([\w.-]+)\/releases\/tag\/([^/]+)/i);
+    if (tagMatch) {
+      form.username.value = tagMatch[1];
+      form.repository.value = tagMatch[2];
+      form.releaseTag.value = tagMatch[3];
+      return;
+    }
+
+    const shortTagMatch = value.match(/^\/?releases\/tag\/([^/]+)/i);
+    if (shortTagMatch) {
+      form.releaseTag.value = shortTagMatch[1];
+      return;
+    }
+
+    if (value.includes('@')) [value, tag] = value.split('@');
+
+    const repoMatch = value.match(/^([\w-]+)\/([\w.-]+)(?:\/.*)?$/);
+    if (repoMatch) {
+      form.username.value = repoMatch[1];
+      form.repository.value = repoMatch[2];
+      form.releaseTag.value = tag || '';
+    }
+  }
+
+  [form.username, form.repository, form.releaseTag].forEach(input => {
+    input.addEventListener('input', () => { handleInput(input.value, false); });
+    input.addEventListener('paste', (e) => { e.preventDefault();
+      const pasteText = (e.clipboardData || window.clipboardData).getData('text');
+      handleInput(pasteText, true);
+    });
+  });
+
+  // GitHub API
   async function fetchAllReleases(username, repo) {
     let releases = [], page = 1;
-    while(true) {
+    while (true) {
       const res = await fetch(`https://api.github.com/repos/${username}/${repo}/releases?page=${page}&per_page=100`);
-      if(res.status === 403) throw new Error('GitHub API rate limit exceeded');
-      if(res.status === 404) throw new Error('Repository not found');
-      if(!res.ok) throw new Error(`API error: ${res.status}`);
+      if (res.status === 403) throw new Error('GitHub API rate limit exceeded');
+      if (res.status === 404) throw new Error('Repository not found');
+      if (!res.ok) throw new Error(`API error: ${res.status}`);
       const data = await res.json();
-      if(data.length===0) break;
+      if (data.length === 0) break;
       releases = releases.concat(data);
       page++;
     }
     return releases;
   }
 
-  function autoFillFromUrl() {
-    const {username, repo, tag} = getUrlParams();
-    if(username) form.username.value = username;
-    if(repo) form.repository.value = repo;
-    if(tag) form.releaseTag.value = tag;
-    if(username && repo) form.dispatchEvent(new Event('submit'));
-  }
-
+  // Handling Statistics 
   function calculateStatistics(releases) {
     let totalDownloads = 0;
     let totalReactions = 0;
@@ -58,19 +109,23 @@ document.addEventListener('DOMContentLoaded', function() {
       totalDownloads += releaseDownloadsCount;
       totalReactions += release.reactions ? release.reactions.total_count : 0;
     });
-    
-    return {
-      totalDownloads,
-      totalReactions,
-      totalReleases,
-      totalAssets
-    };
+
+    return { totalDownloads, totalReactions, totalReleases, totalAssets };
   }
 
+  function formatSize(bytes) {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  }
+
+  // Render
   function renderStatistics(stats, releases) {
-     const statsSection = document.createElement('div');
-     statsSection.className = 'statistics-section';
-     statsSection.innerHTML = `
+    const statsSection = document.createElement('div');
+    statsSection.className = 'statistics-section';
+    statsSection.innerHTML = `
          <div class="stat-card">
              <div class="stat-content">
                  <div class="stat-item">
@@ -94,44 +149,38 @@ document.addEventListener('DOMContentLoaded', function() {
              </div>
          </div>
      `;
-     
-     container.appendChild(statsSection);
-  }
 
-  function formatSize(bytes) {
-    if (bytes === 0) return '0 B';
-    const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    container.appendChild(statsSection);
   }
 
   function renderReleases(allReleases, tag = '') {
     let releases = allReleases.filter(r => r.assets && r.assets.length > 0);
     if (releases.length === 0) {
-        throw new Error(`No releases with files found${tag ? ` for tag "${tag}"` : ''}`);
+      throw new Error(`No releases with files found${tag ? ` for tag "${tag}"` : ''}`);
     }
 
-    const sortedByDate = [...releases].sort((a,b) => new Date(b.published_at) - new Date(a.published_at));
+    const sortedByDate = [...releases].sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
     const latestRelease = sortedByDate[0];
 
-    if(tag && tag.toLowerCase() === 'latest') { releases = [latestRelease]; } 
-    else if(tag) { 
-        releases = releases.filter(r => r.tag_name.toLowerCase() === tag.toLowerCase());
-        if(releases.length === 0) {
-          throw new Error(`No releases with files found for tag "${tag}"`);
-        }
+    if (tag && tag.toLowerCase() === 'latest') {
+      releases = [latestRelease];
+    }
+    else if (tag) {
+      releases = releases.filter(r => r.tag_name.toLowerCase() === tag.toLowerCase());
+      if (releases.length === 0) {
+        throw new Error(`No releases with files found for tag "${tag}"`);
+      }
     }
 
-    const stats = calculateStatistics(allReleases); 
+    const stats = calculateStatistics(allReleases);
     container.innerHTML = '';
     renderStatistics(stats, allReleases);
 
-    releases.forEach((r, i) => {
-        const isLatest = r.tag_name.toLowerCase() === latestRelease.tag_name.toLowerCase();
-        const card = document.createElement('div');
-        card.className = 'release-card';
-        card.innerHTML = `
+    releases.forEach((r) => {
+      const isLatest = r.tag_name.toLowerCase() === latestRelease.tag_name.toLowerCase();
+      const card = document.createElement('div');
+      card.className = 'release-card';
+      card.innerHTML = `
             <div class="release-header">
                 <a href="https://github.com/${r.author.login}/${form.repository.value.trim()}/releases/tag/${r.tag_name}" 
                    target="_blank" 
@@ -139,9 +188,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="version">${r.tag_name}</span>
                 </a>
             <div class="header-right">
-              ${isLatest ? '<span class="latest-label"><i class="fas fa-star"></i> Latest</span>' : 
-                r.prerelease  ? '<span class="pre-label"><i class="fas fa-flask"></i> Pre-release</span>' : 
-                '<span class="release-label"><i class="fas fa-check-circle"></i> Release</span>'}
+              ${isLatest ? '<span class="latest-label"><i class="fas fa-star"></i> Latest</span>' :
+              r.prerelease ? '<span class="pre-label"><i class="fas fa-flask"></i> Pre-release</span>' :
+            '<span class="release-label"><i class="fas fa-check-circle"></i> Release</span>'}
             </div>
             </div>
             <div class="release-meta">
@@ -180,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="files-title-downloads"><i class="fas fa-heart"></i> ${r.reactions.total_count}</span>
                 </div>
                 <div class="reactions-items">
-                    ${r.reactions['+1'] ? `<span><i class="fas fa-thumbs-up" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions['+1']}</span>` : ''}
+                                        ${r.reactions['+1'] ? `<span><i class="fas fa-thumbs-up" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions['+1']}</span>` : ''}
                     ${r.reactions['-1'] ? `<span><i class="fas fa-thumbs-down" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions['-1']}</span>` : ''}
                     ${r.reactions.laugh ? `<span><i class="fas fa-smile" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions.laugh}</span>` : ''}
                     ${r.reactions.hooray ? `<span><i class="fas fa-hands-clapping" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions.hooray}</span>` : ''}
@@ -191,35 +240,53 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>` : ''}
         `;
-        container.appendChild(card);
+      container.appendChild(card);
     });
   }
 
+  // Events & filling form
   form.addEventListener('submit', async e => {
-    e.preventDefault(); 
-    const glassWindow = document.querySelector('.glass-window');  
+    e.preventDefault();
+    const glassWindow = document.querySelector('.glass-window');
     glassWindow.classList.remove('shimmer-once');
     void glassWindow.offsetWidth;
-    glassWindow.classList.add('shimmer-once');  
+    glassWindow.classList.add('shimmer-once');
+
     const username = form.username.value.trim();
     const repo = form.repository.value.trim();
-    const tag = form.releaseTag.value.trim(); 
+    const tag = form.releaseTag.value.trim();
+
     updateUrlParams(username, repo, tag);
-    container.innerHTML = '<div class="loader"><div class="loader-spinner"></div></div>'; 
+
+    const contentContainer = document.querySelector('.content-container');
+    contentContainer.style.minHeight = container.offsetHeight + 'px';
+    container.innerHTML = '<div class="loader"><div class="loader-spinner"></div></div>';
+
     try {
       const releases = await fetchAllReleases(username, repo);
       renderReleases(releases, tag);
-    } catch(err) {
+    } catch (err) {
       container.innerHTML = `<p style="text-align:center; color: #a4d7f4;">${err.message}</p>`;
     }
-  }); 
-  autoFillFromUrl();
-
-  const scrollBtn = document.getElementById('scrollTopBtn');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) { scrollBtn.classList.add('show'); } 
-    else { scrollBtn.classList.remove('show'); }
+    finally {
+      contentContainer.style.minHeight = '';
+    }
   });
 
-  scrollBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  autoFillFromUrl();
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) { scrollBtn.classList.add('show'); }
+    else { scrollBtn.classList.remove('show'); }
+
+    const footerRect = footer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    if (footerRect.top < windowHeight) { scrollBtn.style.bottom = baseBottom + (windowHeight - footerRect.top + 1) + 'px'; }
+    else { scrollBtn.style.bottom = baseBottom + 'px';}
+  });
+
+  scrollBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 });
