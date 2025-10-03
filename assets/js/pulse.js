@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <span class="files-title-downloads"><i class="fas fa-heart"></i> ${r.reactions.total_count}</span>
                 </div>
                 <div class="reactions-items">
-                                        ${r.reactions['+1'] ? `<span><i class="fas fa-thumbs-up" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions['+1']}</span>` : ''}
+                    ${r.reactions['+1'] ? `<span><i class="fas fa-thumbs-up" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions['+1']}</span>` : ''}
                     ${r.reactions['-1'] ? `<span><i class="fas fa-thumbs-down" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions['-1']}</span>` : ''}
                     ${r.reactions.laugh ? `<span><i class="fas fa-smile" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions.laugh}</span>` : ''}
                     ${r.reactions.hooray ? `<span><i class="fas fa-hands-clapping" style="color:#a4d7f4; filter: drop-shadow(0 0 8px rgba(164, 215, 244, 0.2));"></i> ${r.reactions.hooray}</span>` : ''}
@@ -242,6 +242,18 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
       container.appendChild(card);
     });
+  }
+
+  // Scroll to top button handling
+  function updateScrollBtnPosition() {
+    if (window.scrollY > 300) { scrollBtn.classList.add('show'); } 
+    else { scrollBtn.classList.remove('show'); }
+
+    const footerRect = footer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    if (footerRect.top < windowHeight) { scrollBtn.style.bottom = baseBottom + (windowHeight - footerRect.top + 1) + 'px'; } 
+    else { scrollBtn.style.bottom = baseBottom + 'px'; }
   }
 
   // Events & filling form
@@ -275,18 +287,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   autoFillFromUrl();
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) { scrollBtn.classList.add('show'); }
-    else { scrollBtn.classList.remove('show'); }
-
-    const footerRect = footer.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    if (footerRect.top < windowHeight) { scrollBtn.style.bottom = baseBottom + (windowHeight - footerRect.top + 1) + 'px'; }
-    else { scrollBtn.style.bottom = baseBottom + 'px';}
-  });
-
-  scrollBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  window.addEventListener('scroll', updateScrollBtnPosition);
+  window.addEventListener('resize', updateScrollBtnPosition);
+  window.addEventListener('orientationchange', updateScrollBtnPosition);
+  
+  scrollBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  
+  updateScrollBtnPosition();
 });
